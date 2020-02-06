@@ -3,27 +3,21 @@ import lombok.Data;
 import java.util.Comparator;
 
 @Data
-public abstract class Client implements Comparator {
+public class Client implements Comparable<Client> {
 
     private Integer ClientID;
     private String ClientName;
-    private Empoloyee employee;
+    private Employee employee; // sales manager or sales associate
 
-    //constructor with only client id
-    public Client(int id){
+    /**
+     * Constructoe
+     * @param name client name
+     * @param id   client id
+     */
+    public Client(String name, int id ){
         ClientID = id;
-    }
+        ClientName = name;
 
-    public void setClientID(int clientID) {
-        ClientID = clientID;
-    }
-
-    public void setClientName(String clientName) {
-        ClientName = clientName;
-    }
-
-    public void setEmployee(Empoloyee employee) {
-        this.employee = employee;
     }
 
     public int getClientID() {
@@ -34,22 +28,38 @@ public abstract class Client implements Comparator {
         return ClientName;
     }
 
-    public Empoloyee getEmployee() {
+    public Employee getEmployee() {
         return employee;
     }
 
+    public void setClientID(int clientID) {
+        ClientID = clientID;
+    }
+
+    public void setClientName(String clientName) {
+        ClientName = clientName;
+    }
+
+    public void setEmployee(Employee employee) {
+            this.employee = employee;
+    }
+
+
+    /**
+     * compare the current client id with a given one
+     * @param o a given client
+     * @return  positve: this is greater, 0: equal, negative: smaller
+     */
+    @Override
     public int compareTo(Client o) {
-        Client p = (Client) o;
-        if (this.getClientID() < p.getClientID()) {
-            return -1;
-        } else if (this.getClientID() == p.getClientID()) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return this.getClientID() - o.getClientID();
     }
 
     public double totalSales(){
-        // TODO: 2020-02-06 what's in it 
+        return 0.0;
+    }
+
+    public String toString(){
+        return "Client: " + this.ClientName + ". Sales Employee: "+this.employee.getEmployeeName() +" "+this.employee.getSaleID();
     }
 }
